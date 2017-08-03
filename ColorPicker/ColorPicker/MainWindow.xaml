@@ -26,24 +26,24 @@
                 </Grid>
                 <Border Height="140" BorderBrush="Gray" BorderThickness="1" Margin="0,5,0,5">
                     <StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
                             <TextBlock Text="ALPHA" Width="50" Margin="10,0" VerticalAlignment="Center"></TextBlock>
-                            <TextBox Width="80" Margin="10,0" Text="{Binding ElementName=sliderA,Path=Value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" BorderBrush="Gray"></TextBox>
+                            <TextBox Width="80" Height="23" Margin="10,0" Style="{StaticResource TextBoxBase}" Text="{Binding ElementName=sliderA,Path=Value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
                             <Slider Name="sliderA" Value="255" Width="165" Margin="10,0" Maximum="255" IsSnapToTickEnabled="True" ValueChanged="sliderA_ValueChanged"></Slider>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                             <TextBlock Text="RED" Width="50" Margin="10,0" VerticalAlignment="Center"></TextBlock>
-                            <TextBox Width="80" Margin="10,0" Text="{Binding ElementName=sliderR,Path=Value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" BorderBrush="Gray"></TextBox>
+                            <TextBox Width="80" Height="23" Margin="10,0" Style="{StaticResource TextBoxBase}" Text="{Binding ElementName=sliderR,Path=Value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
                             <Slider Name="sliderR" Value="255" Width="165" Margin="10,0" Maximum="255" IsSnapToTickEnabled="True" ValueChanged="sliderR_ValueChanged"></Slider>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                             <TextBlock Text="GREEN" Width="50" Margin="10,0" VerticalAlignment="Center"></TextBlock>
-                            <TextBox Width="80" Margin="10,0" Text="{Binding ElementName=sliderG,Path=Value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" BorderBrush="Gray"></TextBox>
+                            <TextBox Width="80" Height="23" Margin="10,0" Style="{StaticResource TextBoxBase}" Text="{Binding ElementName=sliderG,Path=Value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
                             <Slider Name="sliderG" Value="255" Width="165" Margin="10,0" Maximum="255" IsSnapToTickEnabled="True" ValueChanged="sliderG_ValueChanged"></Slider>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                             <TextBlock Text="BLUE" Width="50" Margin="10,0" VerticalAlignment="Center"></TextBlock>
-                            <TextBox Width="80" Margin="10,0" Text="{Binding ElementName=sliderB,Path=Value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" BorderBrush="Gray"></TextBox>
+                            <TextBox Width="80" Height="23" Margin="10,0" Style="{StaticResource TextBoxBase}" Text="{Binding ElementName=sliderB,Path=Value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
                             <Slider Name="sliderB" Value="255" Width="165" Margin="10,0" Maximum="255" IsSnapToTickEnabled="True" ValueChanged="sliderB_ValueChanged"></Slider>
                         </StackPanel>
                     </StackPanel>
@@ -51,7 +51,7 @@
                 <Border Height="32" BorderBrush="Gray" BorderThickness="1" Margin="0,0,0,5">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="ARGB" Width="50" Margin="10,0" VerticalAlignment="Center"></TextBlock>
-                        <TextBox Name="txtARGB" Width="80" Margin="10,0" Height="23" BorderBrush="Gray"></TextBox>
+                        <TextBox Name="txtARGB" Style="{StaticResource TextBoxBase}" Width="80" Margin="10,0" Height="23"></TextBox>
                         <TextBlock Text="Color" Width="50" Margin="10,0" VerticalAlignment="Center"></TextBlock>
                         <ComboBox Name="cboKnownColor" Width="105" Height="23" MaxDropDownHeight="200"
                                   SelectionChanged="cboKnownColor_SelectionChanged">
