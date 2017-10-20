@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="ColorPicker" Icon="/Images/ColorPicker.ico"
         WindowStartupLocation="CenterScreen" Height="382" Width="400"
-        Loaded="Window_Loaded" ResizeMode="CanMinimize">
+        Loaded="Window_Loaded" ResizeMode="CanMinimize" SnapsToDevicePixels="True">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10" />
@@ -20,8 +20,8 @@
                 <Grid Height="100">
                     <Rectangle Name="rectColor" Stroke="Gray" Height="100" Fill="WhiteSmoke"></Rectangle>
                     <StackPanel>
-                        <TextBlock Text="Simple Text" FontSize="20" Margin="5,0"></TextBlock>
-                        <TextBlock Text="Simple Text" FontSize="20" Margin="5,0" Foreground="White"></TextBlock>
+                        <TextBlock Text="Sample Text" FontSize="20" Margin="5,0"></TextBlock>
+                        <TextBlock Text="Sample Text" FontSize="20" Margin="5,0" Foreground="White"></TextBlock>
                     </StackPanel>
                 </Grid>
                 <Border Height="140" BorderBrush="Gray" BorderThickness="1" Margin="0,5,0,5">
