@@ -23,15 +23,61 @@ namespace ColorPicker
     /// </summary>
     public partial class MainWindow : Window
     {
-        private byte colorAlpha = 255;
-        private byte colorRed = 255;
-        private byte colorGreen = 255;
-        private byte colorBlue = 255;
         private DispatcherTimer timer = new DispatcherTimer();
+
+        #region Propertys
+        public static readonly DependencyProperty ColorProperty =
+            DependencyProperty.Register("Color", typeof(Color), typeof(MainWindow),
+                new PropertyMetadata(Colors.Bisque, new PropertyChangedCallback(OnColorChanged)));
+
+        public static readonly DependencyProperty AlphaProperty =
+            DependencyProperty.Register("Alpha", typeof(byte), typeof(MainWindow),
+                new PropertyMetadata(Colors.Bisque.A, new PropertyChangedCallback(OnARGBChanged)));
+        public static readonly DependencyProperty RedProperty =
+            DependencyProperty.Register("Red", typeof(byte), typeof(MainWindow),
+                new PropertyMetadata(Colors.Bisque.R, new PropertyChangedCallback(OnARGBChanged)));
+        public static readonly DependencyProperty GreenProperty =
+            DependencyProperty.Register("Green", typeof(byte), typeof(MainWindow),
+                new PropertyMetadata(Colors.Bisque.G, new PropertyChangedCallback(OnARGBChanged)));
+        public static readonly DependencyProperty BlueProperty =
+            DependencyProperty.Register("Blue", typeof(byte), typeof(MainWindow),
+                new PropertyMetadata(Colors.Bisque.B, new PropertyChangedCallback(OnARGBChanged)));
+
+        public Color Color
+        {
+            get { return (Color)GetValue(ColorProperty); }
+            set { SetValue(ColorProperty, value); }
+        }
+
+        public byte Alpha
+        {
+            get { return (byte)GetValue(AlphaProperty); }
+            set { SetValue(AlphaProperty, value); }
+        }
+
+        public byte Red
+        {
+            get { return (byte)GetValue(RedProperty); }
+            set { SetValue(RedProperty, value); }
+        }
+
+        public byte Green
+        {
+            get { return (byte)GetValue(GreenProperty); }
+            set { SetValue(GreenProperty, value); }
+        }
+
+        public byte Blue
+        {
+            get { return (byte)GetValue(BlueProperty); }
+            set { SetValue(BlueProperty, value); }
+        }
+        #endregion
 
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = this;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -39,11 +85,46 @@ namespace ColorPicker
             this.cboKnownColor.ItemsSource = typeof(Colors).GetProperties();
             this.cboKnownColor.SelectedItem = typeof(Colors).GetProperty("Bisque");
 
-            UpdateSlider();
-            ShowColor();
-
             timer.Interval = TimeSpan.FromSeconds(0.1);
             timer.Tick += new EventHandler(timer_Tick);
+        }
+
+        private static void OnColorChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            MainWindow win = (MainWindow)sender;
+
+            Color newColor = (Color)e.NewValue;
+            win.Alpha = newColor.A;
+            win.Red = newColor.R;
+            win.Green = newColor.G;
+            win.Blue = newColor.B;
+        }
+
+        private static void OnARGBChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            MainWindow win = (MainWindow)sender;
+
+            Color color = win.Color;
+            if (e.Property == AlphaProperty)
+                color.A = (byte)e.NewValue;
+            else if (e.Property == RedProperty)
+                color.R = (byte)e.NewValue;
+            else if (e.Property == GreenProperty)
+                color.G = (byte)e.NewValue;
+            else if (e.Property == BlueProperty)
+                color.B = (byte)e.NewValue;
+
+            win.Color = color;
+        }
+
+        private void cboKnownColor_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                Color = (Color)(cboKnownColor.SelectedItem as PropertyInfo).GetValue(null, null);
+            }
+            catch (Exception)
+            { }
         }
 
         private void timer_Tick(object sender, EventArgs e)
@@ -52,79 +133,7 @@ namespace ColorPicker
             GetCursorPos(out pt);
 
             Point point = new Point(pt.X, pt.Y);
-            Color color = GetPixelColor(point);
-            colorAlpha = color.A;
-            colorRed = color.R;
-            colorGreen = color.G;
-            colorBlue = color.B;
-            UpdateSlider();
-        }
-
-        private void UpdateSlider()
-        {
-            this.sliderA.Value = colorAlpha;
-            this.sliderR.Value = colorRed;
-            this.sliderG.Value = colorGreen;
-            this.sliderB.Value = colorBlue;
-        }
-
-        private void ShowColor()
-        {
-            Color color = Color.FromArgb(colorAlpha, colorRed, colorGreen, colorBlue);
-            this.rectColor.Fill = new SolidColorBrush(color);
-            this.txtARGB.Text = string.Format("#{0:X2}{1:X2}{2:X2}{3:X2}", colorAlpha, colorRed, colorGreen, colorBlue);
-        }
-
-        private void cboKnownColor_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                Color color = (Color)(cboKnownColor.SelectedItem as PropertyInfo).GetValue(null, null);
-                colorAlpha = color.A;
-                colorRed = color.R;
-                colorGreen = color.G;
-                colorBlue = color.B;
-                UpdateSlider();
-            }
-            catch (Exception)
-            {
-            }
-        }
-
-        private void sliderA_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            if (IsLoaded)
-            {
-                colorAlpha = (byte)this.sliderA.Value;
-                ShowColor();
-            }
-        }
-
-        private void sliderR_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            if (IsLoaded)
-            {
-                colorRed = (byte)this.sliderR.Value;
-                ShowColor();
-            }
-        }
-
-        private void sliderG_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            if (IsLoaded)
-            {
-                colorGreen = (byte)this.sliderG.Value;
-                ShowColor();
-            }
-        }
-
-        private void sliderB_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            if (IsLoaded)
-            {
-                colorBlue = (byte)this.sliderB.Value;
-                ShowColor();
-            }
+            Color = GetPixelColor(point);
         }
 
         #region 获取鼠标坐标
