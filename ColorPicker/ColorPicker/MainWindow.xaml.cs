@@ -115,6 +115,21 @@ namespace ColorPicker
                 color.B = (byte)e.NewValue;
 
             win.Color = color;
+            win.SelectKnownColor(color);
+        }
+
+        public void SelectKnownColor(Color color)
+        {
+            foreach (var item in cboKnownColor.Items)
+            {
+                Color c = (Color)(item as PropertyInfo).GetValue(null, null);
+                if (c == color)
+                {
+                    cboKnownColor.SelectedItem = item;
+                    return;
+                }
+            }
+            cboKnownColor.SelectedItem = null;
         }
 
         private void cboKnownColor_SelectionChanged(object sender, SelectionChangedEventArgs e)
